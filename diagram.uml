@@ -1,0 +1,52 @@
+@startuml
+class Repo {
+    - link: String
+    - title: String
+    + run(): Err
+}
+
+class RepoPanel {
+    <<extends JPanel>>
+    - voteBtn: JButton
+    - titleLbl: JLabel
+    - runBtn: JButton
+    - repoRef: Repo
+}
+
+class RepoListPanel {
+    <<extends JPanel>>
+    - scrollPane: JScrollPane
+    - repoList: List<RepoPanel>
+    - listViewTable: JTable
+    + add(repo: Repo): err
+    + remove(index: int): err
+    + remove(repo: Repo): err
+}
+
+class HeaderPanel {
+    <<extends JPanel>>
+    - addBtn: JButton
+    - remBtn: JButton
+}
+
+class DetailsPanel {
+    <<extends JPanel>>
+    - repoRef: Repo
+    - linkLbl: JLabel
+    - updateRepo(repo: Repo): ()
+}
+
+class DisplayPanel {
+    <<extends JPanel>>
+    - header: HeaderPanel
+    - repoList: RepoListPanel
+    - details: DetailsPanel
+}
+
+RepoPanel "1" --> "1" Repo
+RepoListPanel "1" --> "*" RepoPanel
+DisplayPanel "1" --> "1" HeaderPanel
+DisplayPanel "1" --> "1" RepoListPanel
+DisplayPanel "1" --> "1" DetailsPanel
+DetailsPanel "1" --> "1" Repo
+@enduml
